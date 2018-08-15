@@ -1,0 +1,42 @@
+body{
+	background: url(../img/4.jpg) no-repeat;
+	background-size:cover;
+	font-size: 16px;
+}  
+h3{
+	color:orange;
+	font-family: inherit;
+}
+.form{
+	background: rgba(255,255,255,0.2);
+	width:400px;
+	margin:200px auto;
+}  
+#login_form{
+	display: block;
+}  
+#register_form{
+	display: none;
+}  
+.fa{
+	display: inline-block;
+	top: 27px;
+	left: 6px;
+	position: relative;
+	color: #ccc;
+}  
+input[type="text"],input[type="password"]{
+	padding-left:26px;
+}  
+.checkbox{
+	color:red;
+	padding-left:21px;
+	font-size: 10px;
+	line-height:1.6;
+}  
+#message{
+	font-size: small;
+	text-align: center;
+	color: yellow;
+	height: 20px;
+}

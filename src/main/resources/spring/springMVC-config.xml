@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+        
+      <!-- MVC注解驱动 -->  
+      <mvc:annotation-driven/>
+      
+      <!-- 配置扫描器，使MVC注解生效 -->  
+      <context:component-scan base-package="cn.lung.flower.controller"/>
+      
+      <!-- 试图解析器 -->  
+      <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+      	<property name="prefix" value="/WEB-INF/views/"/>
+      	<property name="suffix" value=".jsp"/>
+      </bean> 
+        
+        
+       <!-- 处理静态资源被“/”拦截的问题 -->
+      <mvc:default-servlet-handler/>
+      
+      	<!-- 文件上传解析器，错误，源码中调用文件上传解析器id必须是multipartResolver -->
+		<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+			<!-- 字符集，乱码 -->
+			<property name="defaultEncoding" value="utf-8"/>
+			<!-- 上传文件的大小 10*1024*1024 -->
+			<property name="maxUploadSize" value="10485760"/>
+		</bean>
+		
+<!-- 配置spring标签 -->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <!-- 国际化信息所在的文件名 -->                     
+        <property name="basename" value="classpath:resources/message" />   
+        <!-- 如果在国际化资源文件中找不到对应代码的信息，就用这个代码作为名称  -->               
+        <property name="useCodeAsDefaultMessage" value="true" />  
+        <property name="defaultEncoding" value="UTF-8" />         
+    </bean> 
+</beans>

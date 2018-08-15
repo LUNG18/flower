@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+  <mapper namespace="cn.lung.flower.mapper.QuestionMapper">
+<!-- 第一种查询方式 -->
+	 <!--  <select id="getQuestionById" resultMap="qAndo">
+	  	select * from question q
+	  	left join
+	  	(select id o_id,text o_text,value o_value,question_id,`order` o_order from `option`)o
+	  	on o.question_id = q.id
+	  	where q.id = #{id}
+	  </select> 
+		<resultMap type="Question" id="qAndo" autoMapping="true">
+			<id column="id" property="id"/>
+			<result column="q_text" property="text"/>
+			<collection property="options" ofType="Option">
+				<id column="o_id" property="id"/>
+				<result column="o_text" property="text"/>
+				<result column="o_value" property="value"/>
+				<result column="o_order" property="order"/>
+			</collection>
+		</resultMap>-->
+<!-- 第二种查询方式 -->
+	<select id="getQuestionById" resultMap="qAndo">
+		select * from question where id = #{id}
+	</select>
+	<select id="getOpts" resultType="Option">
+		select * from `option`
+			where question_id = #{qid}
+	</select>
+		<resultMap type="Question" id="qAndo" autoMapping="true">
+			<id column="id" property="id"/>
+			<result column="q_text" property="text"/>
+			<collection property="options" ofType="Option" select="getOpts" column="id">
+				<id column="id" property="id"/>
+				<result column="text" property="text"/>
+				<result column="value" property="value"/>
+				<result column="order" property="order"/>
+			</collection>
+		</resultMap>
+
+		
+		
+		
+		
+		
+		
+		
+<!-- 插入数据后返回该数据自增id，并赋值给maxId属性（需要该属性有get方法） -->
+		<insert id="insertQuestion" useGeneratedKeys="true" keyProperty="maxId">
+			insert into question values (null,#{text},#{grama})
+		</insert>
+		
+		<!-- <insert id="insertOption" parameterType="java.util.List">
+			insert into `option` values
+			<foreach collection="list" item="opt" separator=",">
+				(null,#{opt.text},#{opt.value},#{opt.order},#{opt.questionId})
+			</foreach>
+		</insert> -->
+  </mapper>
+  
+	
+
+
+  
